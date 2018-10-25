@@ -12,8 +12,8 @@ import re
 def autocomplete(word_start):
     f = open('/usr/share/dict/words')
     word_list = [i for i in f]
-    for i in f:
-        word_list.append(i)
+    # for i in f:
+    #     word_list.append(i)
     f.close()
     regex_pattern = '^' + word_start
     r = re.compile(regex_pattern)
