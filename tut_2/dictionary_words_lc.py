@@ -7,7 +7,7 @@ it takes around 2e-5 seconds to run.
 
 import random
 import sys
-import timeit
+# import timeit
 import linecache
 
 
@@ -24,7 +24,6 @@ import random
 import sys
 from __main__ import rand_dict
 '''
-    print(timeit.timeit("''.join(rand_dict(int(sys.argv[1])))",
-          setup=setup, number=1000000)/1000000)
-    # timeit.timeit("rand_dict(10)", setup=setup, number=100)
+    # print(timeit.timeit("''.join(rand_dict(int(sys.argv[1])))",
+    #       setup=setup, number=1000000)/1000000)
     print(''.join(rand_dict(int(sys.argv[1]))))
