@@ -9,14 +9,27 @@ import sys
 # import timeit
 
 
-def rand_dict(word_length):
-    f = open('/usr/share/dict/words')
-    word_list = [i for i in f]
+def read_dict():
+    """Read the words from the default dictionary in OS X."""
+    f = open('/usr/share/dict/words', 'r')
+    word_list = f.read().replace('\n', ' ').split()
+    # word_list = f.readlines()
+    # word_list = [i for i in f]
     # for i in f:
-    #     testf.append(i)
+    #     word_list.append(i.replace('\n', ''))
     f.close()
-    rand_sen = random.sample(word_list, word_length)
-    return rand_sen
+    return word_list
+
+
+def rand_dict(word_length):
+    """Generate random words from dictionary of given length.
+
+    word_length: The amount of random words to return.
+    returns a list of random words.
+    """
+    word_list = read_dict()
+    random_words = random.sample(word_list, word_length)
+    return random_words
 
 
 if __name__ == '__main__':
@@ -25,6 +38,7 @@ import random
 import sys
 from __main__ import rand_dict
 '''
-    # print(timeit.timeit("''.join(rand_dict(int(sys.argv[1])))",
+    # print(timeit.timeit("rand_dict(int(sys.argv[1]))",
     #       setup=setup, number=1000)/1000)
-    print(''.join(rand_dict(int(sys.argv[1]))))
+    argument = int(sys.argv[1])
+    print(rand_dict(argument))

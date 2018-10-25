@@ -9,15 +9,29 @@ import re
 # import timeit
 
 
-def autocomplete(word_start):
-    f = open('/usr/share/dict/words')
-    word_list = [i for i in f]
+def read_dict():
+    """Read the words from the default dictionary in OS X."""
+    f = open('/usr/share/dict/words', 'r')
+    word_list = f.read().replace('\n', ' ').split()
+    # word_list = f.readlines()
+    # word_list = [i for i in f]
     # for i in f:
-    #     word_list.append(i)
+    #     word_list.append(i.replace('\n', ''))
     f.close()
+    return word_list
+
+
+def autocomplete(word_start):
+    """Autocomplete the input word.
+
+    word_start: the beginning of the words needed to autocomplete.
+    returns: a list of words that start with the input string.
+    """
+    word_list = read_dict()
     regex_pattern = '^' + word_start
     r = re.compile(regex_pattern)
-    return list(filter(r.match, word_list))
+    matched_words = filter(r.match, word_list)
+    return list(matched_words)
 
 
 if __name__ == '__main__':
