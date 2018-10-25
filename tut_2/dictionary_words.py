@@ -11,11 +11,11 @@ import sys
 
 def rand_dict(word_length):
     f = open('/usr/share/dict/words')
-    testf = [i for i in f]
-    for i in f:
-        testf.append(i)
+    word_list = [i for i in f]
+    # for i in f:
+    #     testf.append(i)
     f.close()
-    rand_sen = random.sample(testf, word_length)
+    rand_sen = random.sample(word_list, word_length)
     return rand_sen
 
 
