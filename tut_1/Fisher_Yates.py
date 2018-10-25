@@ -1,3 +1,8 @@
+"""This script implements the Fisher Yates shuffle.
+
+This version shuffles in place.
+"""
+
 import random
 import sys
 
