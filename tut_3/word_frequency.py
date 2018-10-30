@@ -9,13 +9,15 @@ of tuples. It also provides sorting by key and val.
 
 def read_text():
     """Read the input text."""
-    f = open('pg2489.txt', 'r')
-    text_string = f.read()
-    # text_string = f.readlines()
-    # text_string = [i for i in f]
-    # for i in f:
-    #     text_string.append(i.replace('\n', ''))
-    f.close()
+    # f = open('pg2489.txt', 'r')
+    # text_string = f.read()
+    # # text_string = f.readlines()
+    # # text_string = [i for i in f]
+    # # for i in f:
+    # #     text_string.append(i.replace('\n', ''))
+    # f.close()
+    with open('pg2489.txt', 'r') as f:
+        text_string = f.read()
     return text_string
 
 
@@ -136,9 +138,9 @@ def frequency(word, histogram):
 def sort_hist_val(histogram):
     """Sort the histogram by the counts, ascending."""
     if type(histogram) == dict:
-        return sorted(histogram.items(), key=lambda x: x[1])
+        return sorted(histogram.items(), key=lambda x: x[1], reverse=True)
     elif type(histogram) == list:
-        return sorted(histogram, key=lambda x: x[1])
+        return sorted(histogram, key=lambda x: x[1], reverse=True)
     return 0
 
 
@@ -151,9 +153,18 @@ def sort_hist_key(histogram):
     return 0
 
 
+def hist_to_file(histogram):
+    """Write the histogram to a file."""
+    with open('MD_hist.txt', 'w') as write_f:
+        for words in histogram:
+            write_f.write("{0} {1}\n".format(words[0], words[1]))
+    return 0
+
+
 if __name__ == '__main__':
     source_text = read_text()
     word_list = text_preprocessing(source_text)
-    print(sort_hist_val(histogram_ll(word_list))[-20:])
-    print(sort_hist_val(histogram_lt(word_list))[-20:])
-    print(sort_hist_val(histogram_dict(word_list))[-20:])
+    print(sort_hist_val(histogram_ll(word_list))[:20])
+    print(sort_hist_val(histogram_lt(word_list))[:20])
+    print(sort_hist_val(histogram_dict(word_list))[:20])
+    hist_to_file(sort_hist_val(histogram_dict(word_list)))
