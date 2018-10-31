@@ -2,13 +2,15 @@
 
 This generating process is done through probability integral transform. It is
 acheived through sampling from uniform distribution and solving for the inverse
-under its cumulative distribution function.
+under its cumulative distribution function. Currently one sampling function
+takes 1e-5 seconds on my mac.
 """
 
 
 import random
 import math
 import word_frequency
+import timeit
 
 
 def cum_dist(histogram):
@@ -73,11 +75,16 @@ def read_hist():
 
 
 if __name__ == '__main__':
-    cum = cum_dist(read_hist())
-    # for _ in range(100):
-    #     print(sample(cum), end=' ')
-    # print('.')
-    gen_list = [sample(cum) for _ in range(cum[-1][1])]
-    gen_hist = word_frequency.histogram_lt(gen_list)
-    gen_hist_sorted = word_frequency.sort_hist_val(gen_hist)
-    word_frequency.hist_to_file(gen_hist_sorted)
+    # cum = cum_dist(read_hist())
+    setup = '''
+import random
+import math
+from __main__ import sample, cum_dist, binary_search, read_hist
+cum = cum_dist(read_hist())
+'''
+    print(timeit.timeit("sample(cum)",
+          setup=setup, number=1000000)/1000000)
+    # gen_list = [sample(cum) for _ in range(cum[-1][1])]
+    # gen_hist = word_frequency.histogram_lt(gen_list)
+    # gen_hist_sorted = word_frequency.sort_hist_val(gen_hist)
+    # word_frequency.hist_to_file(gen_hist_sorted)
