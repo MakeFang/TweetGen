@@ -1,9 +1,18 @@
+"""This script generates random words given the distribution.
+
+This generating process is done through probability integral transform. It is
+acheived through sampling from uniform distribution and solving for the inverse
+under its cumulative distribution function.
+"""
+
+
 import random
 import math
 import word_frequency
 
 
 def cum_dist(histogram):
+    """Compute the cdf given pdf."""
     cumulative = []
     sum = 0
     for i, j in enumerate(histogram):
@@ -27,6 +36,10 @@ def cum_dist(histogram):
 
 
 def binary_search(cumulative, target):
+    """Search throught the list to find target.
+
+    If target is not found,returns the next indexself.
+    """
     left = 0
     right = len(cumulative) - 1
     while left < right:
@@ -41,6 +54,7 @@ def binary_search(cumulative, target):
 
 
 def sample(cumulative):
+    """Generate sample from the distribution."""
     # cumulative = cum_dist(histogram)
     totals = cumulative[-1][1]
     random_int = random.randint(1, totals)
@@ -49,6 +63,7 @@ def sample(cumulative):
 
 
 def read_hist():
+    """Read the histogram from a txt file."""
     hist = []
     with open('MD_hist.txt', 'r') as f:
         for i in f:
