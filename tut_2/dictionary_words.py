@@ -11,13 +11,15 @@ import sys
 
 def read_dict():
     """Read the words from the default dictionary in OS X."""
-    f = open('/usr/share/dict/words', 'r')
-    word_list = f.read().replace('\n', ' ').split()
+    # f = open('/usr/share/dict/words', 'r')
+    # word_list = f.read().replace('\n', ' ').split()
     # word_list = f.readlines()
     # word_list = [i for i in f]
     # for i in f:
     #     word_list.append(i.replace('\n', ''))
-    f.close()
+    # f.close()
+    with open('/usr/share/dict/words', 'r') as f:
+        word_list = f.read().replace('\n', ' ').split()
     return word_list
 
 

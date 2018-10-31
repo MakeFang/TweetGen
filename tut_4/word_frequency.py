@@ -154,7 +154,7 @@ def sort_hist_key(histogram):
 
 def hist_to_file(histogram):
     """Write the histogram to a file."""
-    with open('MD_hist.txt', 'w') as write_f:
+    with open('MD_hist_gen.txt', 'w') as write_f:
         for words in histogram:
             write_f.write("{0} {1}\n".format(words[0], words[1]))
     return 0
