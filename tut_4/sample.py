@@ -57,10 +57,15 @@ def binary_search(cumulative, target):
 
 def sample(cumulative):
     """Generate sample from the distribution."""
-    # cumulative = cum_dist(histogram)
     totals = cumulative[-1][1]
     random_int = random.randint(1, totals)
-    # print(random_int)
+    # index_result = 0
+    # for index, item in enumerate(cumulative):
+    #     word, num = item
+    #     if random_int <= num:
+    #         index_result = index
+    #         break
+    # return cumulative[index_result][0]
     return cumulative[binary_search(cumulative, random_int)][0]
 
 
