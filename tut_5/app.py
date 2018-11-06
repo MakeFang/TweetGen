@@ -7,7 +7,7 @@ import sample
 app = Flask(__name__)
 
 
-cum_dist = sample.cum_dist(sample.read_hist())
+cumulative_dist = sample.cumulative_dist(sample.read_hist())
 
 
 @app.route('/')
@@ -15,5 +15,5 @@ def gen_words():
     result = ''
     num_words = int(request.args.get('num')) if request.args.get('num') else 10
     for _ in range(num_words):
-        result += sample.sample(cum_dist) + ' '
+        result += sample.sample(cumulative_dist) + ' '
     return render_template('index.html', result=result)

@@ -13,28 +13,14 @@ import word_frequency
 import timeit
 
 
-def cum_dist(histogram):
-    """Compute the cdf given pdf."""
+def cumulative_dist(histogram):
+    """Compute the cumulative occurance given histogram."""
     cumulative = []
     sum = 0
-    for i, j in enumerate(histogram):
-        sum += j[1]
-        cumulative.append((j[0], sum))
+    for word_index, word_tuple in enumerate(histogram):
+        sum += word_tuple[1]
+        cumulative.append((word_tuple[0], sum))
     return cumulative
-
-
-# def binary_search(cumulative, target):
-#     cum_len = len(cumulative)
-#     res_index = math.floor(cum_len/2)
-#     # print("cum", cumulative, "target", target, "index", res_index)
-#     if not cumulative:
-#         return 0
-#     if target == cumulative[res_index][1]:
-#         return res_index
-#     elif target > cumulative[res_index][1]:
-#         return res_index +1 + binary_search(cumulative[res_index+1:], target)
-#     else:
-#         return binary_search(cumulative[:res_index], target)
 
 
 def binary_search(cumulative, target):
@@ -59,13 +45,6 @@ def sample(cumulative):
     """Generate sample from the distribution."""
     totals = cumulative[-1][1]
     random_int = random.randint(1, totals)
-    # index_result = 0
-    # for index, item in enumerate(cumulative):
-    #     word, num = item
-    #     if random_int <= num:
-    #         index_result = index
-    #         break
-    # return cumulative[index_result][0]
     return cumulative[binary_search(cumulative, random_int)][0]
 
 
@@ -80,16 +59,11 @@ def read_hist():
 
 
 if __name__ == '__main__':
-    # cum = cum_dist(read_hist())
     setup = '''
 import random
 import math
-from __main__ import sample, cum_dist, binary_search, read_hist
-cum = cum_dist(read_hist())
+from __main__ import sample, cumulative_dist, binary_search, read_hist
+cumulative = cumulative_dist(read_hist())
 '''
-    print(timeit.timeit("sample(cum)",
+    print(timeit.timeit("sample(cumulative)",
           setup=setup, number=1000000)/1000000)
-    # gen_list = [sample(cum) for _ in range(cum[-1][1])]
-    # gen_hist = word_frequency.histogram_lt(gen_list)
-    # gen_hist_sorted = word_frequency.sort_hist_val(gen_hist)
-    # word_frequency.hist_to_file(gen_hist_sorted)
