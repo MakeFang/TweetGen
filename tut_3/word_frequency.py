@@ -112,7 +112,7 @@ def histogram_lt(word_list):
         if text_word == currentword:
             histogram[-1] = (text_word, histogram[-1][1]+1)
         else:
-            histogram.append([text_word, 1])
+            histogram.append((text_word, 1))
             currentword = text_word
     return histogram
 
