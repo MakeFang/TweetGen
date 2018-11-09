@@ -9,7 +9,7 @@ takes 1e-5 seconds on my mac.
 
 import random
 import math
-import word_frequency
+# import word_frequency
 import timeit
 
 
