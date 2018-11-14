@@ -21,7 +21,7 @@ class SortedListogramTest(unittest.TestCase):
         listogram = SortedListogram(self.fish_words)
         # Verify histogram as list of entries like [(word, count)]
         assert len(listogram) == 5
-        # assert listogram == self.fish_list
+        assert listogram == sorted(self.fish_list, key=lambda x: x[0])
         self.assertCountEqual(listogram, self.fish_list)  # Ignore item order
         # Verify histogram as dictionary of entries like {word: count}
         dictogram = dict(listogram)
