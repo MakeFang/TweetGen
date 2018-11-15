@@ -19,6 +19,8 @@ class LinkedList(object):
         """Initialize this linked list and append the given items, if any."""
         self.head = None  # First node
         self.tail = None  # Last node
+        self.iter = self.head
+        self.lengths = 0
         # Append given items
         if items is not None:
             for item in items:
@@ -56,12 +58,13 @@ class LinkedList(object):
         """Return the length of this linked list by traversing its nodes.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes and count one for each
-        node = self.head
-        count = 0
-        while node is not None:
-            count += 1
-            node = node.next
-        return count
+        # node = self.head
+        # count = 0
+        # while node is not None:
+        #     count += 1
+        #     node = node.next
+        # return count
+        return self.lengths
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
@@ -72,9 +75,12 @@ class LinkedList(object):
         if self.tail is not None:
             self.tail.next = end_node
             self.tail = end_node
-        if self.head is None and self.tail is None:
+        # if self.head is None and self.tail is None:
+        elif self.head is None:
             self.head = end_node
             self.tail = end_node
+            self.iter = self.head
+        self.lengths += 1
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -88,6 +94,8 @@ class LinkedList(object):
         else:
             start_node.next = self.head
             self.head = start_node
+        self.iter = self.head
+        self.lengths += 1
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
@@ -114,6 +122,7 @@ class LinkedList(object):
         prev_node = None
         while cur_node is not None:
             if cur_node.data == item:
+                self.lengths -= 1
                 if cur_node.next is None:
                     self.tail = prev_node
                 if prev_node is not None:
@@ -125,6 +134,28 @@ class LinkedList(object):
             prev_node = cur_node
             cur_node = cur_node.next
         raise ValueError('Item not found: {}'.format(item))
+
+    def replace(self, old_item, new_item):
+        node = self.head
+        while node is not None:
+            if node.data == old_item:
+                node.data = new_item
+                return node.data
+            node = node.next
+        raise ValueError('Item not found: {}'.format(item))
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.iter is not None:
+            result = self.iter
+            self.iter = self.iter.next
+            return result
+        else:
+            self.iter = self.head
+            raise StopIteration
+
 
 def test_linked_list():
     ll = LinkedList()
@@ -139,6 +170,14 @@ def test_linked_list():
     print('head: {}'.format(ll.head))
     print('tail: {}'.format(ll.tail))
     print('length: {}'.format(ll.length()))
+
+    for item in ll:
+        print(item)
+
+    # ll.replace('A', 'X')
+    # print('list: {}'.format(ll))
+    # ll.replace('X', 'C')
+    # print('list: {}'.format(ll))
 
     # Enable this after implementing delete method
     delete_implemented = False
