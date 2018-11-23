@@ -9,6 +9,9 @@ class HashTable(object):
         """Initialize this hash table with the given initial size."""
         # Create a new list (used as fixed-size array) of empty linked lists
         self.buckets = [LinkedList() for _ in range(init_size)]
+        self.bucket_iter = iter(self.buckets)
+        self.iter = iter(self.buckets[0])
+        next(self.bucket_iter)
 
     def __str__(self):
         """Return a formatted string representation of this hash table."""
@@ -18,6 +21,33 @@ class HashTable(object):
     def __repr__(self):
         """Return a string representation of this hash table."""
         return 'HashTable({!r})'.format(self.items())
+
+    def __getitem__(self, key):
+        return self.get(key)
+
+    def __setitem__(self, key, value):
+        return self.set(key, value)
+
+    def __delitem__(self, key):
+        return self.delete(key)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        try:
+            return next(self.iter)
+        except StopIteration:
+            try:
+                self.iter = iter(next(self.bucket_iter))
+                while self.iter.length() == 0:
+                    self.iter = iter(next(self.bucket_iter))
+                return next(self.iter)
+            except StopIteration:
+                self.bucket_iter = iter(self.buckets)
+                self.iter = iter(self.buckets[0])
+                next(self.bucket_iter)
+                raise StopIteration
 
     def _bucket_index(self, key):
         """Return the bucket index where the given key would be stored."""
@@ -138,8 +168,16 @@ def test_hash_table():
         value = ht.get(key)
         print('get({!r}): {!r}'.format(key, value))
 
+    for key, value in [('A', 2), ('B', 3), ('C', 4)]:
+        print('set({!r}, {!r})'.format(key, value))
+        ht[key] = value
+        print('hash table: {}'.format(ht))
+
     print('contains({!r}): {}'.format('X', ht.contains('X')))
     print('length: {}'.format(ht.length()))
+
+    for i in ht:
+        print(i)
 
     # Enable this after implementing delete method
     delete_implemented = True
