@@ -147,6 +147,9 @@ class LinkedList(object):
         raise ValueError('Item not found: {}'.format(item))
 
     def update_append(self, quality, item):
+        """Running time is O(n) where n is the length of the linked list.
+        However, if quality has some time complexity O(g(x)), then the runtime
+        would be O(n*g(x))."""
         node = self.head
         while node is not None:
             if quality(node.data):
@@ -159,7 +162,12 @@ class LinkedList(object):
     def delete_q(self, quality):
         """Delete the given item from this linked list, or raise ValueError.
         TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
+        TODO: Worst case running time: O(???) Why and under what conditions?
+        Worst case and average running time O(n) since the method
+        loops through the linked list once to do the search and delete. Here
+        n is the length of the linked list.
+        However, if quality has some time complexity O(g(x)), then the runtime
+        would be O(n*g(x))."""
         # TODO: Loop through all nodes to find one whose data matches given item
         # TODO: Update previous node to skip around node with matching data
         # TODO: Otherwise raise error to tell user that delete has failed

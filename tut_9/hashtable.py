@@ -56,7 +56,11 @@ class HashTable(object):
 
     def keys(self):
         """Return a list of all keys in this hash table.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        Running time: O(m*n) where m is the number of buckets and
+        n is the average length of the linked list in a bucket.
+        In essence the runtime is O(k) where k is the total number
+        of key value pairs stored."""
         # Collect all keys in each bucket
         all_keys = []
         for bucket in self.buckets:
@@ -66,7 +70,11 @@ class HashTable(object):
 
     def values(self):
         """Return a list of all values in this hash table.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        Running time: O(m*n) where m is the number of buckets and
+        n is the average length of the linked list in a bucket.
+        In essence the runtime is O(k) where k is the total number
+        of key value pairs stored."""
         # TODO: Loop through all buckets
         # TODO: Collect all values in each bucket
         all_values = []
@@ -77,7 +85,12 @@ class HashTable(object):
 
     def items(self):
         """Return a list of all items (key-value pairs) in this hash table.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        Running time: O(m*n) where m is the number of buckets and
+        n is the average length of the linked list in a bucket.
+        In essence the runtime is O(k) where k is the total number
+        of key value pairs stored.
+        The extend method for python lists is O(n)."""
         # Collect all pairs of key-value entries in each bucket
         all_items = []
         for bucket in self.buckets:
@@ -86,7 +99,9 @@ class HashTable(object):
 
     def length(self):
         """Return the number of key-value entries by traversing its buckets.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        Running time is O(1) since its just returning an attribute
+        of the object."""
         # TODO: Loop through all buckets
         # TODO: Count number of key-value entries in each bucket
         lengths = 0
@@ -96,7 +111,10 @@ class HashTable(object):
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        Running time is O(n) where n is the number of elements in
+        the linked list in bucket. Its O(n) because the _find_item method
+        for the hashtable class is O(n)."""
         # TODO: Find bucket where given key belongs
         # TODO: Check if key-value entry exists in bucket
         # bucket_index = hash(key)%len(self.buckets)
@@ -110,7 +128,10 @@ class HashTable(object):
 
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        Running time is O(n) where n is the number of elements in
+        the linked list in bucket. Its O(n) because the _find_item method
+        for the hashtable class is O(n)."""
         # TODO: Find bucket where given key belongs
         # TODO: Check if key-value entry exists in bucket
         # TODO: If found, return value associated with given key
@@ -124,7 +145,11 @@ class HashTable(object):
 
     def set(self, key, value):
         """Insert or update the given key with its associated value.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        Running time is O(n) where n is the number of elements in
+        the linked list in bucket. Its O(n) because the update_append method
+        for the linked list class is O(n). Here the quality function is
+        O(1)."""
         # TODO: Find bucket where given key belongs
         # TODO: Check if key-value entry exists in bucket
         # TODO: If found, update value associated with given key
@@ -135,7 +160,11 @@ class HashTable(object):
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        Running time is O(n) where n is the number of elements in
+        the linked list in bucket. Its O(n) because the delete_q method
+        for the linked list class is O(n). Here the quality function is
+        O(1)."""
         # TODO: Find bucket where given key belongs
         # TODO: Check if key-value entry exists in bucket
         # TODO: If found, delete entry associated with given key
@@ -149,6 +178,9 @@ class HashTable(object):
             raise KeyError('Key not found: {}'.format(key))
 
     def _find_item(self, key):
+        """Running time is O(n) where n is the number of elements in
+        the linked list in bucket. Its O(n) because the find method for
+        the linked list class is O(n)."""
         bucket_index = hash(key)%len(self.buckets)
         find_item = self.buckets[bucket_index].find(lambda x: x[0] == key)
         return find_item
