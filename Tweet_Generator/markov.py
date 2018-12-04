@@ -1,4 +1,5 @@
 from listogram import SortedListogram, SortedCumugram
+from tokenization import read_text, text_preprocessing
 from sample import sample
 import random
 
@@ -33,7 +34,7 @@ def gen_sentence(num_words, markov_dict):
 
 def main():
     word_list = text_preprocessing(read_text('pg2489.txt'))
-    m_c = markov.read_markov(word_list)
+    m_c = read_markov(word_list)
     print(gen_sentence(10, m_c))
 
 
