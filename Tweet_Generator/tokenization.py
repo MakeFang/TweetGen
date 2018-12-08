@@ -7,6 +7,13 @@ def read_text(filename):
         text_string = f.read()
     return text_string
 
+def read_text_to_list(filename):
+    # text_string = []
+    with open(filename, 'r') as f:
+        # for i in f:
+        #     text_string.append(i.replace('\n', ''))
+        text_string = [i.replace('\n', '').split() for i in f]
+    return text_string
 
 def text_preprocessing(source_text):
     """Process the input text."""

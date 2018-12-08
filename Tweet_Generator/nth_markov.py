@@ -8,15 +8,15 @@ import random
 def read_markov(word_list, order):
     markov_dict = {}
     queue = LinkedList(word_list[:order])
-    for i in word_list[order:]:
+    for next_word in word_list[order:]:
         queue_items = tuple(queue.items())
         if queue_items in markov_dict:
-            markov_dict[queue_items].add_count(i)
+            markov_dict[queue_items].add_count(next_word)
         else:
-            markov_dict[queue_items] = SortedListogram([i])
+            markov_dict[queue_items] = SortedListogram([next_word])
         # print(queue)
         # print(markov_dict)
-        queue.append(i)
+        queue.append(next_word)
         queue.delete(queue.head.data)
     return markov_dict
 
@@ -33,8 +33,9 @@ def gen_sentence(num_words, markov_dict, nth):
     start_tuple = random.choice(list(markov_dict.keys()))
     cur_list = LinkedList(start_tuple)
     result = LinkedList(start_tuple)
-    print(result)
+    # print(result)
     for _ in range(num_words-nth):
+        # print(cur_list)
         cur_tuple = tuple(cur_list.items())
         new_word = walk_markov(cur_tuple, markov_dict)
         result.append(new_word)
